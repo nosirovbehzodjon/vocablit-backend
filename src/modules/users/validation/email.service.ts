@@ -6,6 +6,8 @@ import {
 } from 'class-validator';
 import { Repository } from 'typeorm';
 import { User } from '@/src/entities/users.entity'; // adjust based on your project
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from '@/src/generated/i18n.generated';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
@@ -13,6 +15,7 @@ export class UniqueEmailValidator implements ValidatorConstraintInterface {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private readonly i18n: I18nService<I18nTranslations>,
   ) {}
 
   async validate(email: string): Promise<boolean> {
@@ -28,6 +31,6 @@ export class UniqueEmailValidator implements ValidatorConstraintInterface {
   }
 
   defaultMessage(): string {
-    return 'Email $value is already taken';
+    return this.i18n.translate('user.emailTaken');
   }
 }

@@ -1,0 +1,17 @@
+{
+  "usernameRequired": "Foydalanuvchi ismi majburiy",
+  "passwordMinLength": "Parol kamida {constraints.0} belgidan iborat bo'lishi kerak",
+  "usernameTaken": "Foydalanuvchi nomi allaqachon olingan ({value})",
+  "firstNameRequired": "Ism majburiy",
+  "firstNameAlphaCharacters": "Ism faqat harflar, bo'shliqlar yoki chiziqchalardan iborat bo'lishi kerak",
+  "passwordLength": "Parol {constraints.0} dan {constraints.1} gacha belgidan iborat bo'lishi kerak",
+  "learningLevel": "O'rganish darajasi A1, A2, B1, B2, C1, C2 yoki Native bo'lishi kerak",
+  "xpNumberRequired": "XP raqam bo'lishi kerak",
+  "emailInvalid": "Elektron pochta noto'g'ri",
+  "emailTaken": "Elektron pochta allaqachon olingan",
+  "gender": "Jins erkak yoki ayol bo'lishi kerak",
+  "role": "Rola talaba, administrator yoki super_administrator bo'lishi kerak",
+  "successDeleteMessage": "Foydalanuvchi muvaffaqiyatli o'chirildi",
+  "successCreateMessage": "Foydalanuvchi muvaffaqiyatli yaratildi",
+  "successUpdateMessage": "Foydalanuvchi muvaffaqiyatli yangilandi"
+}

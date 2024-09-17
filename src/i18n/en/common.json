@@ -1,0 +1,11 @@
+{
+  "uuidInvalid": "The ID must be a valid UUID",
+  "stringRequired": "This field must be a string",
+  "numberRequired": "This field must be a number",
+  "booleanRequired": "This field must be true or false",
+  "dateInvalid": "This field must be a valid date",
+  "arrayRequired": "This field must be an array",
+  "minValue": "The value must be at least {constraints.0}",
+  "maxValue": "The value must be at most {constraints.0}",
+  "fieldRequired": "This field is required"
+}

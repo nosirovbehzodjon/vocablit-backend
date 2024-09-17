@@ -11,3 +11,8 @@ export interface ICreateResponseData<T> {
   message: string;
   data: T;
 }
+
+export interface IDeleteResponseData {
+  status: number;
+  message: string;
+}

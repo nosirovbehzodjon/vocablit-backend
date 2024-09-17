@@ -4,15 +4,19 @@ import { Repository } from 'typeorm';
 import { User } from '@/src/entities/users.entity';
 import {
   ICreateResponseData,
+  IDeleteResponseData,
   IPaginationResponseData,
 } from '@/src/types/common.types';
 import { funcPageLimitHandler } from '@/src/helpers/funcPageLimitHandler';
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from '@/src/generated/i18n.generated';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private i18n: I18nService<I18nTranslations>,
   ) {}
   //----users-list-----------------------------------------
   async list(
@@ -63,7 +67,7 @@ export class UsersService {
       const newuser = this.userRepository.create(user);
       return {
         status: HttpStatus.CREATED,
-        message: 'dfdf',
+        message: await this.i18n.translate('user.successCreateMessage'),
         data: await this.userRepository.save(newuser),
       };
     } catch (error) {
@@ -75,11 +79,29 @@ export class UsersService {
   }
 
   async update(id: string, user: Partial<User>): Promise<User> {
-    await this.userRepository.update(id, user);
-    return this.userRepository.findOne({ where: { id } });
+    try {
+      await this.userRepository.update(id, user);
+      return this.userRepository.findOne({ where: { id } });
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  async delete(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+  async delete(id: string): Promise<IDeleteResponseData> {
+    try {
+      await this.userRepository.delete(id);
+      return {
+        status: HttpStatus.OK,
+        message: await this.i18n.translate('user.successDeleteMessage'),
+      };
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

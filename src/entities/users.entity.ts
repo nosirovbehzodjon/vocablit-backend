@@ -18,9 +18,7 @@ export class User extends BaseModel {
   password: string;
 
   @Column()
-  @IsIn(['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'native'], {
-    message: 'Role must be either A1, A2, B1, B2, C1, C2 or native',
-  })
+  @IsIn(['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'native'])
   learning_level: string;
 
   @Column({ default: 0 })
@@ -42,9 +40,7 @@ export class User extends BaseModel {
   birthday: string;
 
   @Column({ nullable: true })
-  @IsIn(['male', 'female'], {
-    message: 'Role must be either male or female',
-  })
+  @IsIn(['male', 'female'])
   gender: string;
 
   @Column({ nullable: true })
@@ -54,9 +50,7 @@ export class User extends BaseModel {
   country: string;
 
   @Column({ default: 'student' })
-  @IsIn(['student', 'admin', 'super_admin'], {
-    message: 'Role must be either student, admin or super_admin',
-  })
+  @IsIn(['student', 'admin', 'super_admin'])
   role: string;
 
   //   @OneToMany(() => UserVocabulary, userVocabulary => userVocabulary.user)

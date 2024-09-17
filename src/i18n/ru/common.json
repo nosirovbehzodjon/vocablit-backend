@@ -1,0 +1,11 @@
+{
+  "uuidInvalid": "ID должен быть действительным UUID",
+  "stringRequired": "Это поле должно быть строкой",
+  "numberRequired": "Это поле должно быть числом",
+  "booleanRequired": "Это поле должно быть true или false",
+  "dateInvalid": "Это поле должно содержать действительную дату",
+  "arrayRequired": "Это поле должно быть массивом",
+  "minValue": "Значение должно быть не меньше {constraints.0}",
+  "maxValue": "Значение должно быть не больше {constraints.0}",
+  "fieldRequired": "Это поле обязательно"
+}

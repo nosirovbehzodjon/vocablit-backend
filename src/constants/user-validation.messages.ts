@@ -7,7 +7,7 @@ export const validationMessages = {
     usernameTaken: 'Username is already taken',
     firstNameRequired: 'First name is required',
     alphaCharacters: 'First name must only contain letters, spaces, or hyphens',
-    passwordLength: 'Password must be between 6 and 20 characters long',
+    intervalLength: 'Password must be between 6 and 20 characters long',
     learningLevel:
       'Learning level must be one of A1, A2, B1, B2, C1, C2, or native',
     numberRequired: 'XP must be a number',
@@ -25,7 +25,7 @@ export const validationMessages = {
     firstNameRequired: 'Ism majburiy',
     alphaCharacters:
       "Ism faqat harflar, bo'sh joylar yoki chiziqlarni o'z ichiga olishi kerak",
-    passwordLength: "Parol 6 dan 20 belgigacha bo'lishi kerak",
+    intervalLength: "Parol 6 dan 20 belgigacha bo'lishi kerak",
     learningLevel:
       "O'rganish darajasi A1, A2, B1, B2, C1, C2 yoki native bo'lishi kerak",
     numberRequired: "XP raqam bo'lishi kerak",
@@ -42,7 +42,7 @@ export const validationMessages = {
     usernameTaken: 'Имя пользователя уже занято',
     firstNameRequired: 'Имя обязательно',
     alphaCharacters: 'Имя должно содержать только буквы, пробелы или тире',
-    passwordLength: 'Пароль должен содержать от 6 до 20 символов',
+    intervalLength: 'Пароль должен содержать от 6 до 20 символов',
     learningLevel:
       'Уровень обучения должен быть одним из A1, A2, B1, B2, C1, C2 или native',
     numberRequired: 'XP должен быть числом',

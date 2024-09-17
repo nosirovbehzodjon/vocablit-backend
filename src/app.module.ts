@@ -1,10 +1,16 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { UsersModule } from '@/src/modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmAsyncConfig } from '@/src/db/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LanguageService } from '@/src/middlewere/lang/language.service';
-import { LanguageMiddleware } from '@/src/middlewere/lang/language.middlewere';
+import {
+  AcceptLanguageResolver,
+  CookieResolver,
+  HeaderResolver,
+  I18nModule,
+  QueryResolver,
+} from 'nestjs-i18n';
+import path from 'path';
 
 @Module({
   imports: [
@@ -12,12 +18,26 @@ import { LanguageMiddleware } from '@/src/middlewere/lang/language.middlewere';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmAsyncConfig),
+    I18nModule.forRootAsync({
+      useFactory: () => ({
+        fallbackLanguage: 'en',
+        loaderOptions: {
+          path: path.join(__dirname, '/i18n/'),
+          watch: true,
+        },
+        typesOutputPath: path.join(
+          __dirname,
+          '../src/generated/i18n.generated.ts',
+        ),
+      }),
+      resolvers: [
+        new QueryResolver(['lang', 'l']),
+        new HeaderResolver(['x-lang']),
+        new CookieResolver(),
+        AcceptLanguageResolver,
+      ],
+    }),
     UsersModule,
   ],
-  providers: [LanguageService],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LanguageMiddleware).forRoutes('*'); // Apply to all routes
-  }
-}
+export class AppModule {}

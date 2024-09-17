@@ -1,0 +1,11 @@
+{
+  "uuidInvalid": "ID haqiqiy UUID bo'lishi kerak",
+  "stringRequired": "Bu maydon matn turi bo'lishi kerak",
+  "numberRequired": "Bu maydon raqam bo'lishi kerak",
+  "booleanRequired": "Bu maydon true yoki false bo'lishi kerak",
+  "dateInvalid": "Bu maydon haqiqiy sana bo'lishi kerak",
+  "arrayRequired": "Bu maydon massiv bo'lishi kerak",
+  "minValue": "Qiymat kamida {constraints.0} bo'lishi kerak",
+  "maxValue": "Qiymat ko'pi bilan {constraints.0} bo'lishi kerak",
+  "fieldRequired": "Bu maydon majburiy"
+}
