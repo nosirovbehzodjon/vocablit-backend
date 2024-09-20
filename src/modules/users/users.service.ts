@@ -78,10 +78,17 @@ export class UsersService {
     }
   }
 
-  async update(id: string, user: Partial<User>): Promise<User> {
+  async update(
+    id: string,
+    user: Partial<User>,
+  ): Promise<ICreateResponseData<User>> {
     try {
       await this.userRepository.update(id, user);
-      return this.userRepository.findOne({ where: { id } });
+      return {
+        status: HttpStatus.OK,
+        message: await this.i18n.translate('user.successUpdateMessage'),
+        data: await this.userRepository.findOne({ where: { id } }),
+      };
     } catch (error) {
       throw new HttpException(
         error.message,

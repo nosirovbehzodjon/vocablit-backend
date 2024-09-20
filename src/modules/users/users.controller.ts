@@ -70,7 +70,7 @@ export class UsersController {
   }
 
   //----user-update------------------------------------------
-  @Patch()
+  @Patch(':id')
   async update(
     @Param() params: UserUpdateParamDto,
     @Body() body: UpdateUserDto,
