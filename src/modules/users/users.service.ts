@@ -10,12 +10,16 @@ import {
 import { funcPageLimitHandler } from '@/src/helpers/funcPageLimitHandler';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
+import { CreateUserDto, UpdateUserDto } from './dto/users.dto';
+import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(DifficultyLevel)
+    private difficultyLevelRepository: Repository<DifficultyLevel>,
     private i18n: I18nService<I18nTranslations>,
   ) {}
   //----users-list-----------------------------------------
@@ -27,10 +31,11 @@ export class UsersService {
       const [start, end] = [(page - 1) * limit, page * limit];
       const more = end < (await this.userRepository.count());
 
-      const qb = this.userRepository.createQueryBuilder();
+      const qb = this.userRepository.createQueryBuilder('user');
 
       const [users, count] = await qb
         .select()
+        .leftJoinAndSelect('user.learning_level', 'difficulty')
         .offset(start)
         .limit(limit)
         .getManyAndCount();
@@ -62,7 +67,7 @@ export class UsersService {
     }
   }
 
-  async create(user: Partial<User>): Promise<ICreateResponseData<User>> {
+  async create(user: CreateUserDto): Promise<ICreateResponseData<User>> {
     try {
       const newuser = this.userRepository.create(user);
       return {
@@ -78,9 +83,47 @@ export class UsersService {
     }
   }
 
+  async userLearningLevel(
+    id: string,
+    levelid: string,
+  ): Promise<ICreateResponseData<User>> {
+    try {
+      const user = await this.userRepository.findOneBy({ id });
+      if (!user) {
+        throw new HttpException(
+          await this.i18n.translate('difficulty.userNotFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const level = await this.difficultyLevelRepository.findOneBy({
+        id: levelid,
+      });
+
+      if (!level) {
+        throw new HttpException(
+          await this.i18n.translate('difficulty.levelNotFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      user.learning_level = level;
+      return {
+        status: HttpStatus.CREATED,
+        message: await this.i18n.translate('common.successUpdateMessage'),
+        data: await this.userRepository.save(user),
+      };
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async update(
     id: string,
-    user: Partial<User>,
+    user: UpdateUserDto,
   ): Promise<ICreateResponseData<User>> {
     try {
       await this.userRepository.update(id, user);

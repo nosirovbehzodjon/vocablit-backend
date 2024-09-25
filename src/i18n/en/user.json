@@ -5,7 +5,6 @@
   "firstNameRequired": "First name is required",
   "firstNameAlphaCharacters": "First name must only contain letters, spaces, or hyphens",
   "passwordLength": "Password must be between {constraints.0} and {constraints.1} characters long",
-  "learningLevel": "Learning level must be one of A1, A2, B1, B2, C1, C2, or Native",
   "xpNumberRequired": "XP must be a number",
   "emailInvalid": "Email is not valid",
   "emailTaken": "Email is already taken",

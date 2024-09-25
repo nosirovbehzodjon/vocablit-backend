@@ -15,6 +15,15 @@ export type I18nTranslations = {
         "minValue": string;
         "maxValue": string;
         "fieldRequired": string;
+        "learningLevel": string;
+        "successDeleteMessage": string;
+        "successCreateMessage": string;
+        "successUpdateMessage": string;
+    };
+    "difficulty": {
+        "levelTaken": string;
+        "userNotFound": string;
+        "levelNotFound": string;
     };
     "user": {
         "usernameRequired": string;
@@ -23,7 +32,6 @@ export type I18nTranslations = {
         "firstNameRequired": string;
         "firstNameAlphaCharacters": string;
         "passwordLength": string;
-        "learningLevel": string;
         "xpNumberRequired": string;
         "emailInvalid": string;
         "emailTaken": string;
@@ -32,6 +40,10 @@ export type I18nTranslations = {
         "successDeleteMessage": string;
         "successCreateMessage": string;
         "successUpdateMessage": string;
+    };
+    "word": {
+        "wordTaken": string;
+        "allowedWord": string;
     };
 };
 /* prettier-ignore */

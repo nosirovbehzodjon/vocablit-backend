@@ -7,5 +7,9 @@
   "arrayRequired": "This field must be an array",
   "minValue": "The value must be at least {constraints.0}",
   "maxValue": "The value must be at most {constraints.0}",
-  "fieldRequired": "This field is required"
+  "fieldRequired": "This field is required",
+  "learningLevel": "Learning level must be one of A1, A2, B1, B2, C1, C2, or Native",
+  "successDeleteMessage": "The item was successfully deleted",
+  "successCreateMessage": "The item was successfully created",
+  "successUpdateMessage": "The item was successfully updated"
 }

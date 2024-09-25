@@ -1,6 +1,7 @@
 import { IsEmail, IsIn, IsNumber, IsString, Length } from 'class-validator';
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseModel } from '@/src/entities/base.entity';
+import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 // import { UserVocabulary } from './user_vocabulary.entity';
 
 @Entity()
@@ -17,9 +18,9 @@ export class User extends BaseModel {
   @Length(6)
   password: string;
 
-  @Column()
-  @IsIn(['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'native'])
-  learning_level: string;
+  @ManyToOne(() => DifficultyLevel)
+  @JoinColumn({ name: 'learning_level_id' })
+  learning_level: DifficultyLevel;
 
   @Column({ default: 0 })
   @IsNumber()

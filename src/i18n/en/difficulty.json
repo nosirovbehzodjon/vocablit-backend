@@ -1,0 +1,5 @@
+{
+  "levelTaken": "Level of difficulty is already taken ({value})",
+  "userNotFound": "User not found, you cannot assign a language level!",
+  "levelNotFound": "Language level not found"
+}

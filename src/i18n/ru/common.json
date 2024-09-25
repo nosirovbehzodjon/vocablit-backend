@@ -7,5 +7,9 @@
   "arrayRequired": "Это поле должно быть массивом",
   "minValue": "Значение должно быть не меньше {constraints.0}",
   "maxValue": "Значение должно быть не больше {constraints.0}",
-  "fieldRequired": "Это поле обязательно"
+  "fieldRequired": "Это поле обязательно",
+  "learningLevel": "Уровень обучения должен быть одним из A1, A2, B1, B2, C1, C2 или Native",
+  "successDeleteMessage": "Данные успешно удален",
+  "successCreateMessage": "Данные успешно создан",
+  "successUpdateMessage": "Данные успешно обновлен"
 }

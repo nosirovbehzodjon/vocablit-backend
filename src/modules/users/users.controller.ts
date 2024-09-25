@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '@/src/modules/users/users.service';
 import { User } from '@/src/entities/users.entity';
-import { LIMIT, PAGE } from '@/src/constants/common.constant';
+import { IdentifyParamDto, LIMIT, PAGE } from '@/src/constants/common.constant';
 import {
   IDeleteResponseData,
   IPaginationResponseData,
@@ -92,6 +92,23 @@ export class UsersController {
   ): Promise<IDeleteResponseData> {
     try {
       return this.usersService.delete(params.id);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //----user-create-level------------------------------------------
+
+  @Post(':id')
+  async updateUserLearningLevel(
+    @Param() params: IdentifyParamDto,
+    @Body() body: IdentifyParamDto,
+  ): Promise<IDeleteResponseData> {
+    try {
+      return this.usersService.userLearningLevel(params.id, body.id);
     } catch (error) {
       throw new HttpException(
         error.message,

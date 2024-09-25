@@ -5,7 +5,6 @@
   "firstNameRequired": "Ism majburiy",
   "firstNameAlphaCharacters": "Ism faqat harflar, bo'shliqlar yoki chiziqchalardan iborat bo'lishi kerak",
   "passwordLength": "Parol {constraints.0} dan {constraints.1} gacha belgidan iborat bo'lishi kerak",
-  "learningLevel": "O'rganish darajasi A1, A2, B1, B2, C1, C2 yoki Native bo'lishi kerak",
   "xpNumberRequired": "XP raqam bo'lishi kerak",
   "emailInvalid": "Elektron pochta noto'g'ri",
   "emailTaken": "Elektron pochta allaqachon olingan",

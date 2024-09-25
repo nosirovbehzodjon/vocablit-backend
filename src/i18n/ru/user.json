@@ -5,7 +5,6 @@
   "firstNameRequired": "Имя обязательно",
   "firstNameAlphaCharacters": "Имя должно содержать только буквы, пробелы или дефисы",
   "passwordLength": "Пароль должен быть длиной от {constraints.0} до {constraints.1} символов",
-  "learningLevel": "Уровень обучения должен быть одним из A1, A2, B1, B2, C1, C2 или Native",
   "xpNumberRequired": "XP должно быть числом",
   "emailInvalid": "Некорректный email",
   "emailTaken": "Email уже занят",
