@@ -51,7 +51,7 @@ export class DifficultyLevelService {
     }
   }
 
-  //----get-difficulty-level-details-----------------------------------------
+  //----get-difficulty-level--------------------------------------------
   async details(id: string): Promise<DifficultyLevel> {
     try {
       return this.difficultyLevelRepository.findOne({ where: { id } });
@@ -63,7 +63,7 @@ export class DifficultyLevelService {
     }
   }
 
-  //----create-difficulty-level-details-----------------------------------------
+  //----create-difficulty-level-----------------------------------------
   async create(
     level: Partial<DifficultyLevel>,
   ): Promise<ICreateResponseData<DifficultyLevel>> {
@@ -82,7 +82,7 @@ export class DifficultyLevelService {
     }
   }
 
-  //----update-difficulty-level-details-----------------------------------------
+  //----update-difficulty-level-----------------------------------------
   async update(
     id: string,
     level: Partial<DifficultyLevel>,

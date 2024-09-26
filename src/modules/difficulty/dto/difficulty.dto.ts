@@ -1,23 +1,8 @@
-import { IsUUID, IsIn, Validate } from 'class-validator';
+import { IsIn, Validate } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
 import { PartialType } from '@nestjs/mapped-types';
 import { UniqueLevelValidator } from '@/src/modules/difficulty/validation/level.service';
-
-export class DifficultyLevelDetailsParamDto {
-  @IsUUID()
-  id: string;
-}
-
-export class DifficultyLevelDeleteParamDto {
-  @IsUUID()
-  id: string;
-}
-
-export class DifficultyLevelUpdateParamDto {
-  @IsUUID()
-  id: string;
-}
 
 export class CreateDifficultyLevelDto {
   @Validate(UniqueLevelValidator)

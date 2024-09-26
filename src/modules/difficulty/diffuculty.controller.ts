@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { LIMIT, PAGE } from '@/src/constants/common.constant';
+import { IdentifyParamDto, LIMIT, PAGE } from '@/src/constants/common.constant';
 import {
   IDeleteResponseData,
   IPaginationResponseData,
@@ -18,9 +18,6 @@ import {
 import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 import {
   CreateDifficultyLevelDto,
-  DifficultyLevelDeleteParamDto,
-  DifficultyLevelDetailsParamDto,
-  DifficultyLevelUpdateParamDto,
   UpdateDifficultyLevelDto,
 } from '@/src/modules/difficulty/dto/difficulty.dto';
 import { DifficultyLevelService } from '@/src/modules/difficulty/diffuculty.service';
@@ -47,9 +44,7 @@ export class DifficultyLevelController {
   }
   //----difficulty-level-details------------------------------------------
   @Get(':id')
-  async details(
-    @Param() params: DifficultyLevelDetailsParamDto,
-  ): Promise<DifficultyLevel> {
+  async details(@Param() params: IdentifyParamDto): Promise<DifficultyLevel> {
     try {
       return this.difficultyLevelService.details(params.id);
     } catch (error) {
@@ -76,7 +71,7 @@ export class DifficultyLevelController {
   //----difficulty-level-update------------------------------------------
   @Patch(':id')
   async update(
-    @Param() params: DifficultyLevelUpdateParamDto,
+    @Param() params: IdentifyParamDto,
     @Body() body: UpdateDifficultyLevelDto,
   ) {
     try {
@@ -92,7 +87,7 @@ export class DifficultyLevelController {
   //----difficulty-level-delete------------------------------------------
   @Delete(':id')
   async delete(
-    @Param() params: DifficultyLevelDeleteParamDto,
+    @Param() params: IdentifyParamDto,
   ): Promise<IDeleteResponseData> {
     try {
       return this.difficultyLevelService.delete(params.id);

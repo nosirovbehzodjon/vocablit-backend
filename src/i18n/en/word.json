@@ -1,4 +1,5 @@
 {
   "wordTaken": "This word has already been registered",
-  "allowedWord": "First word must start with an uppercase letter and only alphabetic characters and spaces are allowed"
+  "allowedWord": "First word must start with an uppercase letter and only alphabetic characters and spaces are allowed",
+  "wordNotFound": "Such a word was not found"
 }

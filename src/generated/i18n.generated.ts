@@ -44,6 +44,7 @@ export type I18nTranslations = {
     "word": {
         "wordTaken": string;
         "allowedWord": string;
+        "wordNotFound": string;
     };
 };
 /* prettier-ignore */

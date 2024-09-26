@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import {
   ICreateResponseData,
   IDeleteResponseData,
@@ -11,12 +11,16 @@ import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
 import { Words } from '@/src/entities/words.entity';
 import { UpdateWordDto } from '@/src/modules/words/dto/words.dto';
+import { CreateWordDto } from '@/src/modules/words/dto/words.dto';
+import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 
 @Injectable()
 export class WordsService {
   constructor(
     @InjectRepository(Words)
     private wordsRepository: Repository<Words>,
+    @InjectRepository(DifficultyLevel)
+    private difficultyLevelRepository: Repository<DifficultyLevel>,
     private i18n: I18nService<I18nTranslations>,
   ) {}
   //----words-list-----------------------------------------
@@ -64,14 +68,22 @@ export class WordsService {
     }
   }
 
-  //----create-word-details-----------------------------------------
-  async create(level: Partial<Words>): Promise<ICreateResponseData<Words>> {
+  //----create-word-----------------------------------------
+  async create(word: CreateWordDto): Promise<ICreateResponseData<Words>> {
     try {
-      const newlevel = this.wordsRepository.create(level);
+      const data = new Words();
+
+      const difficultyLevels = await this.difficultyLevelRepository.findBy({
+        id: In(word.difficulty_level),
+      });
+      data.word = word.word;
+      data.difficulty_level = difficultyLevels;
+
+      const newword = this.wordsRepository.create(data);
       return {
         status: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successCreateMessage'),
-        data: await this.wordsRepository.save(newlevel),
+        data: await this.wordsRepository.save(newword),
       };
     } catch (error) {
       throw new HttpException(
@@ -81,13 +93,35 @@ export class WordsService {
     }
   }
 
-  //----update-word-details-----------------------------------------
+  //----update-word-----------------------------------------
   async update(
     id: string,
-    level: UpdateWordDto,
+    response: UpdateWordDto,
   ): Promise<ICreateResponseData<Words>> {
     try {
-      await this.wordsRepository.update(id, level);
+      const word = await this.wordsRepository.findOne({
+        where: { id },
+        relations: ['difficulty_level'],
+      });
+      if (!word) {
+        throw new HttpException(
+          await this.i18n.translate('word.wordNotFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      if (response.word) {
+        word.word = response.word;
+      }
+
+      if (response.difficulty_level) {
+        const difficultyLevels = await this.difficultyLevelRepository.findBy({
+          id: In(response.difficulty_level),
+        });
+        word.difficulty_level = difficultyLevels;
+      }
+
+      await this.wordsRepository.save(word);
       return {
         status: HttpStatus.OK,
         message: await this.i18n.translate('common.successUpdateMessage'),
@@ -101,7 +135,7 @@ export class WordsService {
     }
   }
 
-  //----delete-word-details-----------------------------------------
+  //----delete-word-----------------------------------------
   async delete(id: string): Promise<IDeleteResponseData> {
     try {
       await this.wordsRepository.delete(id);
