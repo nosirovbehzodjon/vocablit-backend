@@ -18,7 +18,7 @@ export class User extends BaseModel {
   @Length(6)
   password: string;
 
-  @ManyToOne(() => DifficultyLevel)
+  @ManyToOne(() => DifficultyLevel, { cascade: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'learning_level_id' })
   learning_level: DifficultyLevel;
 

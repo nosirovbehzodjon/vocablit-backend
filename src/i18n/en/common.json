@@ -9,7 +9,9 @@
   "maxValue": "The value must be at most {constraints.0}",
   "fieldRequired": "This field is required",
   "learningLevel": "Learning level must be one of A1, A2, B1, B2, C1, C2, or Native",
+  "partOfSpeech": "Part of speech must be one of Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction or Interjection",
   "successDeleteMessage": "The item was successfully deleted",
   "successCreateMessage": "The item was successfully created",
-  "successUpdateMessage": "The item was successfully updated"
+  "successUpdateMessage": "The item was successfully updated",
+  "notFound": "Information with the given identify was not found."
 }

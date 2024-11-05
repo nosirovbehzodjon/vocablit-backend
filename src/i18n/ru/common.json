@@ -9,7 +9,9 @@
   "maxValue": "Значение должно быть не больше {constraints.0}",
   "fieldRequired": "Это поле обязательно",
   "learningLevel": "Уровень обучения должен быть одним из A1, A2, B1, B2, C1, C2 или Native",
+  "partOfSpeech": "Часть речи обучения должен быть одним из Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction или Interjection",
   "successDeleteMessage": "Данные успешно удален",
   "successCreateMessage": "Данные успешно создан",
-  "successUpdateMessage": "Данные успешно обновлен"
+  "successUpdateMessage": "Данные успешно обновлен",
+  "notFound": "Информация с указанным идентификатором не найдена."
 }

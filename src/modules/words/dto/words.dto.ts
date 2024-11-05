@@ -1,4 +1,11 @@
-import { IsArray, IsNotEmpty, Matches, Validate } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+  Validate,
+} from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 import { UniqueWordValidator } from '@/src/modules/words/validation/word.service';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
@@ -15,7 +22,30 @@ export class CreateWordDto {
   @IsArray({
     message: i18nValidationMessage<I18nTranslations>('common.arrayRequired'),
   })
+  @IsString({
+    each: true,
+    message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
+  })
   difficulty_level: string[];
+
+  @IsArray({
+    message: i18nValidationMessage<I18nTranslations>('common.arrayRequired'),
+  })
+  @IsString({
+    each: true,
+    message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
+  })
+  part_of_speech: string[];
+
+  @IsOptional()
+  @IsArray({
+    message: i18nValidationMessage<I18nTranslations>('common.arrayRequired'),
+  })
+  @IsString({
+    each: true,
+    message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
+  })
+  defination?: string[];
 }
 
 export class UpdateWordDto extends PartialType(CreateWordDto) {}

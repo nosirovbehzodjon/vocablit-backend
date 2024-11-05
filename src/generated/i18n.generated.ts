@@ -16,14 +16,21 @@ export type I18nTranslations = {
         "maxValue": string;
         "fieldRequired": string;
         "learningLevel": string;
+        "partOfSpeech": string;
         "successDeleteMessage": string;
         "successCreateMessage": string;
         "successUpdateMessage": string;
+        "notFound": string;
     };
     "difficulty": {
         "levelTaken": string;
         "userNotFound": string;
         "levelNotFound": string;
+    };
+    "part-of-speech": {
+        "speechTaken": string;
+        "userNotFound": string;
+        "speechNotFound": string;
     };
     "user": {
         "usernameRequired": string;

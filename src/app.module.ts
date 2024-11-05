@@ -3,7 +3,6 @@ import { UsersModule } from '@/src/modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmAsyncConfig } from '@/src/db/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WordsModule } from '@/src/modules/words/words.module';
 import {
   AcceptLanguageResolver,
   CookieResolver,
@@ -11,8 +10,13 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
+
 import path from 'path';
+
 import { DifficultyLevelModule } from '@/src/modules/difficulty/diffuculty.module';
+import { WordsModule } from '@/src/modules/words/words.module';
+import { PartOfSpeechModule } from '@/src/modules/part-of-speech/part-of-speech.module';
+import { DefinationModule } from '@/src/modules/definations/defination.module';
 
 @Module({
   imports: [
@@ -41,7 +45,9 @@ import { DifficultyLevelModule } from '@/src/modules/difficulty/diffuculty.modul
     }),
     UsersModule,
     DifficultyLevelModule,
+    PartOfSpeechModule,
     WordsModule,
+    DefinationModule,
   ],
 })
 export class AppModule {}

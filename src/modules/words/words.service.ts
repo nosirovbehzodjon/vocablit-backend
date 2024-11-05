@@ -13,6 +13,8 @@ import { Words } from '@/src/entities/words.entity';
 import { UpdateWordDto } from '@/src/modules/words/dto/words.dto';
 import { CreateWordDto } from '@/src/modules/words/dto/words.dto';
 import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
+import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
+import { Defination } from '@/src/entities/defination.entity';
 
 @Injectable()
 export class WordsService {
@@ -21,6 +23,10 @@ export class WordsService {
     private wordsRepository: Repository<Words>,
     @InjectRepository(DifficultyLevel)
     private difficultyLevelRepository: Repository<DifficultyLevel>,
+    @InjectRepository(PartOfSpeech)
+    private partOfSpeechRepository: Repository<PartOfSpeech>,
+    @InjectRepository(Defination)
+    private definationRepository: Repository<Defination>,
     private i18n: I18nService<I18nTranslations>,
   ) {}
   //----words-list-----------------------------------------
@@ -37,6 +43,8 @@ export class WordsService {
       const [words, count] = await qb
         .select()
         .leftJoinAndSelect('words.difficulty_level', 'word_difficulty_level')
+        .leftJoinAndSelect('words.part_of_speech', 'word_part_of_speech')
+        .leftJoinAndSelect('words.definitions', 'word_definitions')
         .offset(start)
         .limit(limit)
         .getManyAndCount();
@@ -73,13 +81,33 @@ export class WordsService {
     try {
       const data = new Words();
 
+      data.word = word.word;
+
+      //difficulty level
       const difficultyLevels = await this.difficultyLevelRepository.findBy({
         id: In(word.difficulty_level),
       });
-      data.word = word.word;
       data.difficulty_level = difficultyLevels;
 
+      //part of speech
+      const partOfSpeeches = await this.partOfSpeechRepository.findBy({
+        id: In(word.part_of_speech),
+      });
+      data.part_of_speech = partOfSpeeches;
+
       const newword = this.wordsRepository.create(data);
+
+      //defination
+      if (word.defination) {
+        word.defination.forEach(async (item) => {
+          const newdefination = new Defination();
+          newdefination.defination = item;
+          newdefination.words = newword;
+
+          await this.definationRepository.save(newdefination);
+        });
+      }
+
       return {
         status: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successCreateMessage'),
@@ -101,8 +129,9 @@ export class WordsService {
     try {
       const word = await this.wordsRepository.findOne({
         where: { id },
-        relations: ['difficulty_level'],
+        relations: ['difficulty_level', 'part_of_speech'],
       });
+
       if (!word) {
         throw new HttpException(
           await this.i18n.translate('word.wordNotFound'),
@@ -119,6 +148,13 @@ export class WordsService {
           id: In(response.difficulty_level),
         });
         word.difficulty_level = difficultyLevels;
+      }
+
+      if (response.part_of_speech) {
+        const partOfSpeeches = await this.partOfSpeechRepository.findBy({
+          id: In(response.part_of_speech),
+        });
+        word.part_of_speech = partOfSpeeches;
       }
 
       await this.wordsRepository.save(word);

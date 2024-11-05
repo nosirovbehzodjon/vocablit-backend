@@ -3,10 +3,10 @@ import { BaseModel } from '@/src/entities/base.entity';
 import { Words } from '@/src/entities/words.entity';
 
 @Entity()
-export class DifficultyLevel extends BaseModel {
+export class PartOfSpeech extends BaseModel {
   @Column({ type: 'text', unique: true })
-  level: string;
+  speech: string;
 
-  @ManyToMany(() => Words, (word) => word.difficulty_level)
+  @ManyToMany(() => Words, (word) => word.part_of_speech)
   words: Words[];
 }

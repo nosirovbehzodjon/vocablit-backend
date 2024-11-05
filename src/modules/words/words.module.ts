@@ -6,10 +6,27 @@ import { WordsService } from '@/src/modules/words/words.service';
 import { UniqueWordValidator } from '@/src/modules/words/validation/word.service';
 import { DifficultyLevelService } from '@/src/modules/difficulty/diffuculty.service';
 import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
+import { PartOfSpeechService } from '@/src/modules/part-of-speech/part-of-speech.service';
+import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
+import { DefinationService } from '@/src/modules/definations/defination.service';
+import { Defination } from '@/src/entities/defination.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Words, DifficultyLevel])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Words,
+      DifficultyLevel,
+      PartOfSpeech,
+      Defination,
+    ]),
+  ],
   controllers: [WordsController],
-  providers: [WordsService, DifficultyLevelService, UniqueWordValidator],
+  providers: [
+    WordsService,
+    DifficultyLevelService,
+    PartOfSpeechService,
+    DefinationService,
+    UniqueWordValidator,
+  ],
 })
 export class WordsModule {}

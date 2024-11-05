@@ -3,10 +3,11 @@ import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { User } from '@/src/entities/users.entity';
 import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 import { Words } from '@/src/entities/words.entity';
+import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
+import { Defination } from '@/src/entities/defination.entity';
 // import { Words } from '@/src/entities/words.entity';
 // import { Defination } from '@/src/entities/defination.entity';
 // import { Examples } from '@/src/entities/example.entity';
-// import { PartOfSpeech } from '@/src/entities/part-of-speach.entity';
 
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -21,10 +22,10 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     entities: [
       User,
       DifficultyLevel,
+      PartOfSpeech,
       Words,
-      // Defination,
+      Defination,
       // Examples,
-      // PartOfSpeech,
     ],
     synchronize: true,
   }),

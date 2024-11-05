@@ -9,7 +9,9 @@
   "maxValue": "Qiymat ko'pi bilan {constraints.0} bo'lishi kerak",
   "fieldRequired": "Bu maydon majburiy",
   "learningLevel": "O'rganish darajasi A1, A2, B1, B2, C1, C2 yoki Native bo'lishi kerak",
+  "partOfSpeech": "So'z turi Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction yoki Interjection bo'lishi kerak",
   "successDeleteMessage": "Ma'lumot muvaffaqiyatli o'chirildi",
   "successCreateMessage": "Ma'lumot muvaffaqiyatli yaratildi",
-  "successUpdateMessage": "Ma'lumot muvaffaqiyatli yangilandi"
+  "successUpdateMessage": "Ma'lumot muvaffaqiyatli yangilandi",
+  "notFound": "Berilgan identifikator bo‘yicha ma'lumot topilmadi."
 }
