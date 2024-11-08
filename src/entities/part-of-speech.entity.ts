@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
 import { BaseModel } from '@/src/entities/base.entity';
 import { Words } from '@/src/entities/words.entity';
+import { Defination } from '@/src/entities/defination.entity';
 
 @Entity()
 export class PartOfSpeech extends BaseModel {
@@ -9,4 +10,9 @@ export class PartOfSpeech extends BaseModel {
 
   @ManyToMany(() => Words, (word) => word.part_of_speech)
   words: Words[];
+
+  @OneToMany(() => Defination, (definition) => definition.part_of_speech, {
+    cascade: true,
+  })
+  defination: Defination[];
 }

@@ -34,5 +34,5 @@ export class Words extends BaseModel {
   @OneToMany(() => Defination, (definition) => definition.words, {
     cascade: true,
   })
-  definitions: Defination[];
+  defination: Defination[];
 }

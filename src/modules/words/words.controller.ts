@@ -17,6 +17,8 @@ import {
 } from '@/src/types/common.types';
 import { Words } from '@/src/entities/words.entity';
 import {
+  AddNewDefinationDto,
+  AddNewPartOfSpeechDto,
   CreateWordDto,
   UpdateWordDto,
 } from '@/src/modules/words/dto/words.dto';
@@ -86,6 +88,40 @@ export class WordsController {
   ): Promise<IDeleteResponseData> {
     try {
       return this.wordsService.delete(params.id);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //----adding-defination------------------------------------------
+
+  @Patch('defination/:id')
+  async defination(
+    @Param() params: IdentifyParamDto,
+    @Body() body: AddNewDefinationDto,
+  ) {
+    try {
+      return this.wordsService.addWordDefination(params.id, body.defination);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //----adding-defination------------------------------------------
+
+  @Patch('speech/:id')
+  async speech(
+    @Param() params: IdentifyParamDto,
+    @Body() body: AddNewPartOfSpeechDto,
+  ) {
+    try {
+      return this.wordsService.addWordPartOfSpeech(params.id, body.speech);
     } catch (error) {
       throw new HttpException(
         error.message,

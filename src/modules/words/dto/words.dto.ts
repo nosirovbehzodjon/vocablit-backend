@@ -49,3 +49,25 @@ export class CreateWordDto {
 }
 
 export class UpdateWordDto extends PartialType(CreateWordDto) {}
+
+export class AddNewDefinationDto {
+  @IsString({
+    each: true,
+    message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
+  })
+  @IsArray({
+    message: i18nValidationMessage<I18nTranslations>('common.arrayRequired'),
+  })
+  defination: string[];
+}
+
+export class AddNewPartOfSpeechDto {
+  @IsString({
+    each: true,
+    message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
+  })
+  @IsArray({
+    message: i18nValidationMessage<I18nTranslations>('common.arrayRequired'),
+  })
+  speech: string[];
+}

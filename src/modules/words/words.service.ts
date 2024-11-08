@@ -5,6 +5,7 @@ import {
   ICreateResponseData,
   IDeleteResponseData,
   IPaginationResponseData,
+  IUpdateResponseData,
 } from '@/src/types/common.types';
 import { funcPageLimitHandler } from '@/src/helpers/funcPageLimitHandler';
 import { I18nService } from 'nestjs-i18n';
@@ -44,7 +45,7 @@ export class WordsService {
         .select()
         .leftJoinAndSelect('words.difficulty_level', 'word_difficulty_level')
         .leftJoinAndSelect('words.part_of_speech', 'word_part_of_speech')
-        .leftJoinAndSelect('words.definitions', 'word_definitions')
+        .leftJoinAndSelect('words.defination', 'word_defination')
         .offset(start)
         .limit(limit)
         .getManyAndCount();
@@ -125,7 +126,7 @@ export class WordsService {
   async update(
     id: string,
     response: UpdateWordDto,
-  ): Promise<ICreateResponseData<Words>> {
+  ): Promise<IUpdateResponseData<Words>> {
     try {
       const word = await this.wordsRepository.findOne({
         where: { id },
@@ -178,6 +179,88 @@ export class WordsService {
       return {
         status: HttpStatus.OK,
         message: await this.i18n.translate('common.successDeleteMessage'),
+      };
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //-----adding-defination------------------------------------
+  async addWordDefination(
+    id: string,
+    definations: string[],
+  ): Promise<IUpdateResponseData<Words>> {
+    try {
+      const word = await this.wordsRepository.findOne({
+        where: { id },
+      });
+
+      if (!word) {
+        throw new HttpException(
+          await this.i18n.translate('word.wordNotFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      definations.forEach(async (item) => {
+        const newdefination = new Defination();
+        newdefination.defination = item;
+        newdefination.words = word;
+
+        await this.definationRepository.save(newdefination);
+      });
+
+      await this.wordsRepository.save(word);
+      return {
+        status: HttpStatus.OK,
+        message: await this.i18n.translate('common.successUpdateMessage'),
+        data: await this.wordsRepository.findOne({
+          where: { id },
+          relations: ['defination'],
+        }),
+      };
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //-----adding-part-of-speech------------------------------------
+  async addWordPartOfSpeech(
+    id: string,
+    speech: string[],
+  ): Promise<IUpdateResponseData<Words>> {
+    try {
+      const word = await this.wordsRepository.findOne({
+        where: { id },
+      });
+
+      if (!word) {
+        throw new HttpException(
+          await this.i18n.translate('word.wordNotFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const partOfSpeeches = await this.partOfSpeechRepository.findBy({
+        id: In(speech),
+      });
+
+      word.part_of_speech = partOfSpeeches;
+
+      await this.wordsRepository.save(word);
+      return {
+        status: HttpStatus.OK,
+        message: await this.i18n.translate('common.successUpdateMessage'),
+        data: await this.wordsRepository.findOne({
+          where: { id },
+          relations: ['part_of_speech'],
+        }),
       };
     } catch (error) {
       throw new HttpException(
