@@ -10,6 +10,8 @@ import { PartOfSpeechService } from '@/src/modules/part-of-speech/part-of-speech
 import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
 import { DefinationService } from '@/src/modules/definations/defination.service';
 import { Defination } from '@/src/entities/defination.entity';
+import { Example } from '@/src/entities/example.entity';
+import { ExampleService } from '@/src/modules/example/example.service';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { Defination } from '@/src/entities/defination.entity';
       DifficultyLevel,
       PartOfSpeech,
       Defination,
+      Example,
     ]),
   ],
   controllers: [WordsController],
@@ -26,6 +29,7 @@ import { Defination } from '@/src/entities/defination.entity';
     DifficultyLevelService,
     PartOfSpeechService,
     DefinationService,
+    ExampleService,
     UniqueWordValidator,
   ],
 })

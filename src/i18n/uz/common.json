@@ -13,5 +13,8 @@
   "successDeleteMessage": "Ma'lumot muvaffaqiyatli o'chirildi",
   "successCreateMessage": "Ma'lumot muvaffaqiyatli yaratildi",
   "successUpdateMessage": "Ma'lumot muvaffaqiyatli yangilandi",
-  "notFound": "Berilgan identifikator bo‘yicha ma'lumot topilmadi."
+  "notFound": "Berilgan identifikator bo‘yicha ma'lumot topilmadi.",
+  "invalidCredentials": "Noto‘g‘ri ma'lumot kiritildi",
+  "successLogin": "Xush kelibsiz! Tizimga kirish muvaffaqiyatli amalga oshirildi.",
+  "invalidTokenFormat": ""
 }

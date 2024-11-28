@@ -21,6 +21,9 @@ export type I18nTranslations = {
         "successCreateMessage": string;
         "successUpdateMessage": string;
         "notFound": string;
+        "invalidCredentials": string;
+        "successLogin": string;
+        "invalidTokenFormat": string;
     };
     "difficulty": {
         "levelTaken": string;

@@ -14,26 +14,26 @@ import {
 import { funcPageLimitHandler } from '@/src/helpers/funcPageLimitHandler';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
-import { Defination } from '@/src/entities/defination.entity';
+import { Example } from '@/src/entities/example.entity';
 
 @Injectable()
-export class DefinationService {
+export class ExampleService {
   constructor(
-    @InjectRepository(Defination)
-    private definationRepository: Repository<Defination>,
+    @InjectRepository(Example)
+    private exampleRepository: Repository<Example>,
     private i18n: I18nService<I18nTranslations>,
   ) {}
 
-  //----defination-list-----------------------------------------
+  //----example-list-----------------------------------------
   async list(
     ...rest: [number, number]
-  ): Promise<IPaginationResponseData<Defination>> {
+  ): Promise<IPaginationResponseData<Example>> {
     try {
       const [page, limit] = funcPageLimitHandler(...rest);
       const [start, end] = [(page - 1) * limit, page * limit];
-      const more = end < (await this.definationRepository.count());
+      const more = end < (await this.exampleRepository.count());
 
-      const qb = this.definationRepository.createQueryBuilder();
+      const qb = this.exampleRepository.createQueryBuilder();
 
       const [levels, count] = await qb
         .select()
@@ -56,10 +56,10 @@ export class DefinationService {
     }
   }
 
-  //----get-defination--------------------------------------------
-  async details(id: string): Promise<Defination> {
+  //----get-example--------------------------------------------
+  async details(id: string): Promise<Example> {
     try {
-      const data = await this.definationRepository.findOne({
+      const data = await this.exampleRepository.findOne({
         where: { id },
         relations: ['words'],
       });
@@ -80,16 +80,16 @@ export class DefinationService {
     }
   }
 
-  //----create-defination-----------------------------------------
+  //----create-example-----------------------------------------
   async create(
-    defination: Partial<Defination>,
-  ): Promise<ICreateResponseData<Defination>> {
+    Example: Partial<Example>,
+  ): Promise<ICreateResponseData<Example>> {
     try {
-      const newdefination = this.definationRepository.create(defination);
+      const newExample = this.exampleRepository.create(Example);
       return {
         statusCode: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successCreateMessage'),
-        data: await this.definationRepository.save(newdefination),
+        data: await this.exampleRepository.save(newExample),
       };
     } catch (error) {
       throw new HttpException(
@@ -99,17 +99,17 @@ export class DefinationService {
     }
   }
 
-  //----update-defination-----------------------------------------
+  //----update-example-----------------------------------------
   async update(
     id: string,
-    defination: Partial<Defination>,
-  ): Promise<ICreateResponseData<Defination>> {
+    level: Partial<Example>,
+  ): Promise<ICreateResponseData<Example>> {
     try {
-      await this.definationRepository.update(id, defination);
+      await this.exampleRepository.update(id, level);
       return {
         statusCode: HttpStatus.OK,
         message: await this.i18n.translate('common.successUpdateMessage'),
-        data: await this.definationRepository.findOne({ where: { id } }),
+        data: await this.exampleRepository.findOne({ where: { id } }),
       };
     } catch (error) {
       throw new HttpException(
@@ -119,10 +119,10 @@ export class DefinationService {
     }
   }
 
-  //----delete-defination-details-----------------------------------------
+  //----delete-example-details-----------------------------------------
   async delete(id: string): Promise<IDeleteResponseData> {
     try {
-      const response = await this.definationRepository.delete(id);
+      const response = await this.exampleRepository.delete(id);
       if (response.affected === 0) {
         throw new NotFoundException(
           this.i18n.translate('common.notFound', {

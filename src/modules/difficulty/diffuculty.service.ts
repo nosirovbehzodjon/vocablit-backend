@@ -54,7 +54,18 @@ export class DifficultyLevelService {
   //----get-difficulty-level--------------------------------------------
   async details(id: string): Promise<DifficultyLevel> {
     try {
-      return this.difficultyLevelRepository.findOne({ where: { id } });
+      const data = await this.difficultyLevelRepository.findOne({
+        where: { id },
+      });
+
+      if (!data) {
+        throw new HttpException(
+          this.i18n.translate('common.notFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return data;
     } catch (error) {
       throw new HttpException(
         error.message,
@@ -70,7 +81,7 @@ export class DifficultyLevelService {
     try {
       const newlevel = this.difficultyLevelRepository.create(level);
       return {
-        status: HttpStatus.CREATED,
+        statusCode: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successCreateMessage'),
         data: await this.difficultyLevelRepository.save(newlevel),
       };
@@ -90,7 +101,7 @@ export class DifficultyLevelService {
     try {
       await this.difficultyLevelRepository.update(id, level);
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('common.successUpdateMessage'),
         data: await this.difficultyLevelRepository.findOne({ where: { id } }),
       };
@@ -107,7 +118,7 @@ export class DifficultyLevelService {
     try {
       await this.difficultyLevelRepository.delete(id);
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('common.successDeleteMessage'),
       };
     } catch (error) {

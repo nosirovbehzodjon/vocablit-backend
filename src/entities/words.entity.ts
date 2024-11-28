@@ -3,6 +3,7 @@ import { BaseModel } from '@/src/entities/base.entity';
 import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
 import { Defination } from '@/src/entities/defination.entity';
+import { Example } from '@/src/entities/example.entity';
 // import { Defination } from '@/src/entities/defination.entity';
 // import { Examples } from '@/src/entities/example.entity';
 
@@ -21,7 +22,7 @@ export class Words extends BaseModel {
     },
   )
   @JoinTable({ name: 'words_difficulty_level' })
-  difficulty_level: DifficultyLevel[];
+  difficulty_level?: DifficultyLevel[];
 
   @ManyToMany(() => PartOfSpeech, (partOfSpeech) => partOfSpeech.words, {
     nullable: false,
@@ -29,10 +30,17 @@ export class Words extends BaseModel {
     onDelete: 'CASCADE',
   })
   @JoinTable({ name: 'words_part_of_speech' })
-  part_of_speech: PartOfSpeech[];
+  part_of_speech?: PartOfSpeech[];
 
   @OneToMany(() => Defination, (definition) => definition.words, {
     cascade: true,
+    onDelete: 'CASCADE',
   })
-  defination: Defination[];
+  defination?: Defination[];
+
+  @OneToMany(() => Example, (example) => example.words, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  example?: Example[];
 }

@@ -5,9 +5,7 @@ import { DifficultyLevel } from '@/src/entities/difficulty-level.entity';
 import { Words } from '@/src/entities/words.entity';
 import { PartOfSpeech } from '@/src/entities/part-of-speech.entity';
 import { Defination } from '@/src/entities/defination.entity';
-// import { Words } from '@/src/entities/words.entity';
-// import { Defination } from '@/src/entities/defination.entity';
-// import { Examples } from '@/src/entities/example.entity';
+import { Example } from '@/src/entities/example.entity';
 
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -19,14 +17,7 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    entities: [
-      User,
-      DifficultyLevel,
-      PartOfSpeech,
-      Words,
-      Defination,
-      // Examples,
-    ],
+    entities: [User, DifficultyLevel, PartOfSpeech, Words, Defination, Example],
     synchronize: true,
   }),
 };

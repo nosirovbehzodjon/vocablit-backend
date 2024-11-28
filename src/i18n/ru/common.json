@@ -13,5 +13,8 @@
   "successDeleteMessage": "Данные успешно удален",
   "successCreateMessage": "Данные успешно создан",
   "successUpdateMessage": "Данные успешно обновлен",
-  "notFound": "Информация с указанным идентификатором не найдена."
+  "notFound": "Информация с указанным идентификатором не найдена.",
+  "invalidCredentials": "Неверные учетные данные",
+  "successLogin": "Добро пожаловать! Вход выполнен успешно.",
+  "invalidTokenFormat": ""
 }

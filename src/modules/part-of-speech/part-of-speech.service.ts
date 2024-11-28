@@ -1,6 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   ICreateResponseData,
   IDeleteResponseData,
@@ -54,7 +59,19 @@ export class PartOfSpeechService {
   //----get-part-of-speech--------------------------------------------
   async details(id: string): Promise<PartOfSpeech> {
     try {
-      return this.partOfSpeechRepository.findOne({ where: { id } });
+      const data = await this.partOfSpeechRepository.findOne({
+        where: { id },
+        // relations: ['words'],
+      });
+
+      if (!data) {
+        throw new HttpException(
+          this.i18n.translate('common.notFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return data;
     } catch (error) {
       throw new HttpException(
         error.message,
@@ -70,7 +87,7 @@ export class PartOfSpeechService {
     try {
       const newlevel = this.partOfSpeechRepository.create(level);
       return {
-        status: HttpStatus.CREATED,
+        statusCode: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successCreateMessage'),
         data: await this.partOfSpeechRepository.save(newlevel),
       };
@@ -90,7 +107,7 @@ export class PartOfSpeechService {
     try {
       await this.partOfSpeechRepository.update(id, level);
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('common.successUpdateMessage'),
         data: await this.partOfSpeechRepository.findOne({ where: { id } }),
       };
@@ -105,9 +122,17 @@ export class PartOfSpeechService {
   //----delete-part-of-speech-details-----------------------------------------
   async delete(id: string): Promise<IDeleteResponseData> {
     try {
-      await this.partOfSpeechRepository.delete(id);
+      const response = await this.partOfSpeechRepository.delete(id);
+      if (response.affected === 0) {
+        throw new NotFoundException(
+          this.i18n.translate('common.notFound', {
+            args: { id },
+          }),
+        );
+      }
+
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('common.successDeleteMessage'),
       };
     } catch (error) {

@@ -53,7 +53,4 @@ export class User extends BaseModel {
   @Column({ default: 'student' })
   @IsIn(['student', 'admin', 'super_admin'])
   role: string;
-
-  //   @OneToMany(() => UserVocabulary, userVocabulary => userVocabulary.user)
-  //   userVocabulary: UserVocabulary[];
 }

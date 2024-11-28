@@ -36,26 +36,33 @@ export class CreateUserDto {
   @IsString({
     message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
   })
-  @IsNotEmpty()
   @Validate(UniqueUsernameValidator)
   @MinLength(5, {
     message: i18nValidationMessage<I18nTranslations>('common.minValue'),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage<I18nTranslations>('common.fieldRequired'),
   })
   username: string;
 
   @IsString({
     message: i18nValidationMessage<I18nTranslations>('common.stringRequired'),
   })
-  @IsNotEmpty()
   @IsAlpha()
   @MinLength(2, {
     message: i18nValidationMessage<I18nTranslations>('common.minValue'),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage<I18nTranslations>('common.fieldRequired'),
   })
   first_name: string;
 
   @IsString()
   @Length(6, 20, {
     message: i18nValidationMessage<I18nTranslations>('user.passwordLength'),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage<I18nTranslations>('common.fieldRequired'),
   })
   password: string;
 

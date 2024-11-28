@@ -18,6 +18,7 @@ import {
 import { Words } from '@/src/entities/words.entity';
 import {
   AddNewDefinationDto,
+  AddNewExampleDto,
   AddNewPartOfSpeechDto,
   CreateWordDto,
   UpdateWordDto,
@@ -113,7 +114,24 @@ export class WordsController {
     }
   }
 
-  //----adding-defination------------------------------------------
+  //----adding-example------------------------------------------
+
+  @Patch('example/:id')
+  async example(
+    @Param() params: IdentifyParamDto,
+    @Body() body: AddNewExampleDto,
+  ) {
+    try {
+      return this.wordsService.addWordExample(params.id, body.example);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  //----adding-speech------------------------------------------
 
   @Patch('speech/:id')
   async speech(

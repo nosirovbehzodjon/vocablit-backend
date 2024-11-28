@@ -14,6 +14,7 @@ import { I18nTranslations } from '@/src/generated/i18n.generated';
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class UniqueUsernameValidator implements ValidatorConstraintInterface {
+  public username: string = '';
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -23,6 +24,7 @@ export class UniqueUsernameValidator implements ValidatorConstraintInterface {
   async validate(username: string): Promise<boolean> {
     try {
       const user = await this.userRepository.findOne({ where: { username } });
+      this.username = username;
       return !user;
     } catch (error) {
       throw new HttpException(
@@ -34,6 +36,8 @@ export class UniqueUsernameValidator implements ValidatorConstraintInterface {
   }
 
   defaultMessage(): string {
-    return this.i18n.translate('user.usernameTaken');
+    return this.i18n.translate('user.usernameTaken', {
+      args: { value: this.username },
+    });
   }
 }

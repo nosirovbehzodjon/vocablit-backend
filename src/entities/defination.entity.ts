@@ -8,7 +8,7 @@ export class Defination extends BaseModel {
   @Column({ type: 'text' })
   defination: string;
 
-  @ManyToOne(() => Words, (word) => word.defination)
+  @ManyToOne(() => Words, (word) => word.defination, { onDelete: 'CASCADE' })
   words: Words;
 
   @ManyToOne(() => PartOfSpeech, (word) => word.defination)

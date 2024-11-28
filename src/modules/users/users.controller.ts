@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '@/src/modules/users/users.service';
 import { User } from '@/src/entities/users.entity';
@@ -24,11 +25,13 @@ import {
   UserDetailsParamDto,
   UserUpdateParamDto,
 } from '@/src/modules/users/dto/users.dto';
+import { JwtAuthGuard } from '@/src/guard/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   //----user-list------------------------------------------
+  @UseGuards(JwtAuthGuard)
   @Get()
   async list(
     @Query('page') page: string = PAGE,

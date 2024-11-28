@@ -13,5 +13,8 @@
   "successDeleteMessage": "The item was successfully deleted",
   "successCreateMessage": "The item was successfully created",
   "successUpdateMessage": "The item was successfully updated",
-  "notFound": "Information with the given identify was not found."
+  "notFound": "Information with the given identify was not found.",
+  "invalidCredentials": "Invalid credentials",
+  "successLogin": "You’ve successfully accessed your account.",
+  "invalidTokenFormat": "Invalid token format"
 }

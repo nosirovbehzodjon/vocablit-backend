@@ -24,3 +24,8 @@ export class IdentifiesParamDto {
   })
   id: string[];
 }
+
+// HEADER CONSTANTS
+export const HEADER_LANG = 'x-lang' as const;
+export const HEADER_AUTHORIZATION = 'authorization' as const;
+export const TOKEN_TYPE = 'Bearer ' as const;

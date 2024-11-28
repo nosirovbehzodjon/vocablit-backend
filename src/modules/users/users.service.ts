@@ -7,6 +7,7 @@ import {
   IDeleteResponseData,
   IPaginationResponseData,
 } from '@/src/types/common.types';
+import * as bcrypt from 'bcrypt';
 import { funcPageLimitHandler } from '@/src/helpers/funcPageLimitHandler';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from '@/src/generated/i18n.generated';
@@ -58,7 +59,19 @@ export class UsersService {
   //----get-user-details-----------------------------------------
   async details(id: string): Promise<User> {
     try {
-      return this.userRepository.findOne({ where: { id } });
+      const data = await this.userRepository.findOne({
+        where: { id },
+        relations: ['learning_level'],
+      });
+
+      if (!data) {
+        throw new HttpException(
+          this.i18n.translate('common.notFound'),
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return data;
     } catch (error) {
       throw new HttpException(
         error.message,
@@ -69,9 +82,13 @@ export class UsersService {
 
   async create(user: CreateUserDto): Promise<ICreateResponseData<User>> {
     try {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(user.password, salt);
+      user.password = hashedPassword;
+
       const newuser = this.userRepository.create(user);
       return {
-        status: HttpStatus.CREATED,
+        statusCode: HttpStatus.CREATED,
         message: await this.i18n.translate('user.successCreateMessage'),
         data: await this.userRepository.save(newuser),
       };
@@ -109,7 +126,7 @@ export class UsersService {
 
       user.learning_level = level;
       return {
-        status: HttpStatus.CREATED,
+        statusCode: HttpStatus.CREATED,
         message: await this.i18n.translate('common.successUpdateMessage'),
         data: await this.userRepository.save(user),
       };
@@ -128,7 +145,7 @@ export class UsersService {
     try {
       await this.userRepository.update(id, user);
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('user.successUpdateMessage'),
         data: await this.userRepository.findOne({ where: { id } }),
       };
@@ -144,7 +161,7 @@ export class UsersService {
     try {
       await this.userRepository.delete(id);
       return {
-        status: HttpStatus.OK,
+        statusCode: HttpStatus.OK,
         message: await this.i18n.translate('user.successDeleteMessage'),
       };
     } catch (error) {
