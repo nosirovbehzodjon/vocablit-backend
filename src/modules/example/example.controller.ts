@@ -15,11 +15,11 @@ import {
   IDeleteResponseData,
   IPaginationResponseData,
 } from '@/src/types/common.types';
-import { Example } from '@/src/entities/Example.entity';
+import { Example } from '@/src/entities/example.entity';
 import {
   CreateExampleDto,
   UpdateExampleDto,
-} from '@/src/modules/example/dto/Example.dto';
+} from '@/src/modules/example/dto/example.dto';
 import { ExampleService } from '@/src/modules/example/example.service';
 
 @Controller('examples')
