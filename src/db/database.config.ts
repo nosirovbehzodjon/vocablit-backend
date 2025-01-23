@@ -17,7 +17,10 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    entities: [User, DifficultyLevel, PartOfSpeech, Words, Defination, Example],
     synchronize: true,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+    entities: [User, DifficultyLevel, PartOfSpeech, Words, Defination, Example],
   }),
 };
